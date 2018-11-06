@@ -6,6 +6,7 @@ import './registerServiceWorker'
 
 Vue.config.productionTip = false
 
+Vue.prototype.$ebus = new Vue();
 new Vue({
   router,
   store,
