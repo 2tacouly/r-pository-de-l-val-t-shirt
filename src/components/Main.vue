@@ -48,10 +48,10 @@ export default {
             this.brands=payload;
             this.nwtbl();
         });
-        // this.$ebus.$on("valeur-couleurs", (payload) => {
-        //     this.colors=payload;
-        //     this.nwtbl();
-        // });
+        this.$ebus.$on("valeur-couleurs", (payload) => {
+            this.colors=payload;
+            this.nwtbl();
+        });
         console.log(this.range + "range");
         console.log(this.brands + "brands");
         console.log(this.couleurs + "couleurs");
@@ -77,27 +77,29 @@ export default {
                 }              
             }); 
             this.nvtbl=this.forBrands(this.nvtbl);
-            // this.nvtbl=this.forColor(this.nvtbl);
+            this.nvtbl=this.forColor(this.nvtbl);
         },
 
         forBrands(tbl){
-            var compte=0;
+            var tblProp=tbl;
             var bl=[];                 
             this.brands.forEach(element => {
+                var compte=0;
                 tbl.forEach(indice => {
                     if(element == indice.brand){
                         bl.push(indice);
+                        console.log("jsuis dans le premier if la ooooooy"+element);
+                        
                     }
-                    if(element != indice.brand){
-                        console.log("rentre dans le if");
-                        console.log(tbl.length);
-                        
-                        compte ++;
-                        console.log(compte);
-                        
+                    if(element != indice.brand){                        
+                        compte ++;                        
                         if (compte == tbl.length && this.brands.length>=1) {
-                            console.log("on ets dans le tableau");
+                            console.log("on ets dans le tableau brands");
                             tbl=[];
+                        }
+                        if (this.brands.length>=4) {
+                            console.log("on met le tableau a neuf");
+                            tbl=tblProp;
                         }
                     }
                 });
@@ -109,23 +111,34 @@ export default {
             }
         },
 
-        // forColor(tbl){
-        //     var bl=[];                 
-        //     this.colors.forEach(element => {
-        //         tbl.forEach(indice => {
-        //             if(element == indice.color){
-        //                 bl.push(indice);
-        //             }else{
-        //                 return tbl=[];
-        //             }
-        //         });
-        //     });
-        //     if (bl.length) {
-        //         return bl;
-        //     }else{
-        //         return tbl;
-        //     }
-        // }
+        forColor(tbl){
+            var tblProp=tbl;
+            var bl=[];                 
+            this.colors.forEach(element => {
+                var compte=0;
+                tbl.forEach(indice => {
+                    if(element == indice.color){
+                        bl.push(indice);
+                    }
+                    if(element != indice.color){
+                        compte ++;
+                        if (compte == tbl.length && this.colors.length>=1) {
+                            console.log("on ets dans le tableau colors");
+                            tbl=[];
+                        }
+                        if (this.colors.length>=6) {
+                            console.log("on met le tableau a neuf 9 quoi lol  colors");
+                            tbl=tblProp;
+                        }
+                    }
+                });
+            });
+            if (bl.length) {
+                return bl;
+            }else{
+                return tbl;
+            }
+        }
     }
 }
 </script>
